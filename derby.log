@@ -1,0 +1,10 @@
+----------------------------------------------------------------
+Sun May 28 15:56:37 CEST 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-015c-4f58-294d-00000566cfb0 
+on database directory /home/vincentxis/dev/java-projects/BackendExaminationProjectTwoRB/simpleDb  with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
+Loaded from file:/home/vincentxis/.m2/repository/org/apache/derby/derby/10.8.2.2/derby-10.8.2.2.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_131-b11
+user.dir=/home/vincentxis/dev/java-projects/BackendExaminationProjectTwoRB
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
