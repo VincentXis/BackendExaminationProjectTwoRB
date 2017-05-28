@@ -1,5 +1,7 @@
 package se.nackademin.domain.event;
 
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,7 +43,7 @@ public class EventTest {
     }
 
     @Test
-    public void getAllEventsMatchingCategory() {
+    public void selectAllEventsMatchingCategory() {
         String divider = "----------------------------------------";
         Query categoryPersonal = manager.createQuery("select e from Event e where e.category.name = 'Personal'", Event.class);
         List<Event> personalEvents = categoryPersonal.getResultList();
@@ -55,7 +57,12 @@ public class EventTest {
         workEvents.forEach(System.out::println);
     }
 
-
+    @Test
+    public void selectEventByDate() {
+        Query query = manager.createQuery("SELECT a from Event a where a.startDate = :date", Event.class).setParameter("date", LocalDate.parse("2017-05-31"));
+        List<Event> eventList = query.getResultList();
+        System.out.println(eventList);
+    }
 
     @After
     public void tearDown() throws Exception {

@@ -11,8 +11,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-
 import java.util.List;
+
 import static junit.framework.TestCase.assertTrue;
 
 @SuppressWarnings("Duplicates")
@@ -26,6 +26,29 @@ public class CalendarTest {
         ApplicationUtilityFunctions.createCalendar(manager);
         ApplicationUtilityFunctions.createCategories(manager);
         ApplicationUtilityFunctions.createEventsThenPersist(manager);
+    }
+
+    @Test
+    public void createNewCalendarThenPersistIfNameIsUnique() {
+        List<Calendar> calendarList = ApplicationUtilityFunctions.getAllCalendars(manager);
+        int initialSizeOfCalendarList = calendarList.size();
+
+        ApplicationUtilityFunctions.persistNewCalendar(new Calendar("Wawa"), manager);
+        calendarList = ApplicationUtilityFunctions.getAllCalendars(manager);
+        assertTrue(calendarList.size() == (initialSizeOfCalendarList + 1));
+        System.out.println(calendarList);
+
+        // Create another calendar with the same name
+        ApplicationUtilityFunctions.persistNewCalendar(new Calendar("Wawa"), manager);
+        calendarList = ApplicationUtilityFunctions.getAllCalendars(manager);
+        assertTrue(calendarList.size() == (initialSizeOfCalendarList + 1));
+        System.out.println(calendarList);
+
+        // Create another calendar but with a new name this time
+        ApplicationUtilityFunctions.persistNewCalendar(new Calendar("Totaly new calendar"), manager);
+        calendarList = ApplicationUtilityFunctions.getAllCalendars(manager);
+        System.out.println(calendarList);
+        assertTrue(calendarList.size() == (initialSizeOfCalendarList + 2));
     }
 
     @Test

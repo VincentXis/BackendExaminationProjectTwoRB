@@ -10,7 +10,38 @@ import javax.persistence.Query;
 import java.util.List;
 
 public class ApplicationUtilityFunctions {
-    // Create entities
+    // Create new entities for testing
+    public static void persistNewCalendar(Calendar calendar, EntityManager manager) {
+        try {
+            manager.getTransaction().begin();
+            Query query = manager.createNativeQuery("SELECT * from Calendar a where a.name = ?", Calendar.class);
+            query.setParameter(1, calendar.getName());
+            List<Calendar> resultList = query.getResultList();
+            if (resultList.isEmpty()) {
+                manager.persist(calendar);
+            }
+            manager.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void persistNewCategory(Category category, EntityManager manager) {
+        try {
+            manager.getTransaction().begin();
+            Query query = manager.createNativeQuery("SELECT * from Category a where a.name = ?", Category.class);
+            query.setParameter(1, category.getName());
+            List<Calendar> resultList = query.getResultList();
+            if (resultList.isEmpty()) {
+                manager.persist(category);
+            }
+            manager.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Create entities for setup
     public static void createCalendar(EntityManager manager) {
         try {
             manager.getTransaction().begin();
@@ -115,6 +146,7 @@ public class ApplicationUtilityFunctions {
     public static List<Calendar> getAllCalendars(EntityManager manager) {
         return manager.createQuery("select a from Calendar a", Calendar.class).getResultList();
     }
+
     public static List<Category> getAllCategories(EntityManager manager) {
         return manager.createQuery("select a from Category a", Category.class).getResultList();
     }
@@ -129,6 +161,7 @@ public class ApplicationUtilityFunctions {
         query.setParameter(1, categoryName);
         return (Category) query.getResultList().get(0);
     }
+
     public static Calendar getCalendarMatchingName(String calendarName, EntityManager manager) {
         Query query = manager.createNativeQuery(
                 "SELECT * from Calendar a where a.name = ?", Calendar.class);
