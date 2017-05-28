@@ -29,7 +29,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void selectSpecificCategory(){
+    public void selectSpecificCategory() {
         createCategories();
         Query query = manager.createQuery("select a from Category a where a.name = 'Personal'", Category.class);
 
@@ -37,9 +37,8 @@ public class CategoryTest {
     }
 
 
-
     // Helper functions
-    public void createCategories(){
+    public void createCategories() {
         int numberOfCategories = manager.createQuery("select a from Category a", Category.class).getResultList().size();
         if (numberOfCategories == 0) {
             manager.persist(new Category("Personal"));
@@ -47,7 +46,8 @@ public class CategoryTest {
             manager.persist(new Category("School"));
         }
     }
-    public List<Category> getCategoryList(){
+
+    public List<Category> getCategoryList() {
         return manager.createQuery("select a from Category a", Category.class).getResultList();
     }
 
