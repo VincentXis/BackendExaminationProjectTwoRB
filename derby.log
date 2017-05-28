@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Sun May 28 19:07:41 CEST 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-015c-5007-1716-00000c513818 
+Sun May 28 23:15:55 CEST 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-015c-50ea-5b7f-00000c4545c8 
 on database directory C:\dev\BackendExaminationProjectTwoRB\simpleDb  with class loader sun.misc.Launcher$AppClassLoader@6d06d69c 
 Loaded from file:/C:/Users/Rickard%20Bernal/.m2/repository/org/apache/derby/derby/10.8.2.2/derby-10.8.2.2.jar
 java.vendor=Oracle Corporation

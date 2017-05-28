@@ -34,32 +34,27 @@ public class Event {
     public Event() {
     }
 
-    public Event(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
-
     public Event(String name, String description, String startDate, String endDate, String startTime, String endTime) {
         this.name = name;
         this.description = description;
-        this.startDate = parseDateFromString(startDate);
-        this.endDate = parseDateFromString(endDate);
-        this.startTime = parseTimeFromString(startTime);
-        this.endTime = parseTimeFromString(endTime);
+        this.startDate = LocalDate.parse(startDate);
+        this.endDate = LocalDate.parse(endDate);
+        this.startTime = LocalTime.parse(startTime, DateTimeFormat.forPattern("HH:mm"));
+        this.endTime = LocalTime.parse(endTime, DateTimeFormat.forPattern("HH:mm"));
     }
 
-    public Event(String name, String description, LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime, Calendar calendar, Category category) {
+    public Event(String name, String description, String startDate, String endDate, String startTime, String endTime, Category category) {
         this.name = name;
         this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.calendar = calendar;
+        this.startDate = LocalDate.parse(startDate);
+        this.endDate = LocalDate.parse(endDate);
+        this.startTime = LocalTime.parse(startTime, DateTimeFormat.forPattern("HH:mm"));
+        this.endTime = LocalTime.parse(endTime, DateTimeFormat.forPattern("HH:mm"));
         this.category = category;
     }
 
-    // Set
+
+    // Setters
     public void setId(Long id) {
         this.id = id;
     }
@@ -96,7 +91,7 @@ public class Event {
         this.category = category;
     }
 
-    // Get
+    // Getters
     public Long getId() {
         return id;
     }
@@ -133,21 +128,11 @@ public class Event {
         return category;
     }
 
-    // Converter functions
-    private LocalDate parseDateFromString(String dateString) {
-        DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-mm-dd");
-        return dtf.parseLocalDate(dateString);
-    }
-
-    private LocalTime parseTimeFromString(String timeString) {
-        DateTimeFormatter dtf = DateTimeFormat.forPattern("HH:mm");
-        return dtf.parseLocalTime(timeString);
-    }
-
     @Override
     public String toString() {
+        DateTimeFormatter dtf = DateTimeFormat.shortTime();
         return String.format("Id: %d\nName: %s\nDescription: %s\nCategory: %s\nStart date: %s\nEnd date: %s\nStart time: %s\nEnd time: %s\nCalendar: %s\n",
-                id, name, description, category, startDate, endDate, startTime, endTime, calendar
+                id, name, description, category, startDate, endDate, dtf.print(startTime), dtf.print(endTime), calendar
         );
     }
 }

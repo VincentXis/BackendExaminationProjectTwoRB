@@ -13,6 +13,8 @@ public class Category {
     private Long id;
     private String name;
 
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private List<Event> eventList;
 
     // Constructors
     public Category() {
@@ -23,7 +25,7 @@ public class Category {
     }
 
 
-    // Set
+    // Setters
     public void setId(Long id) {
         this.id = id;
     }
@@ -32,7 +34,11 @@ public class Category {
         this.name = name;
     }
 
-    // Get
+    public void setEventList(List<Event> eventList) {
+        this.eventList = eventList;
+    }
+
+    // Getters
     public Long getId() {
         return id;
     }
@@ -41,11 +47,12 @@ public class Category {
         return name;
     }
 
+    public List<Event> getEventList() {
+        return eventList;
+    }
+
     @Override
     public String toString() {
-        return "Category{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return name;
     }
 }

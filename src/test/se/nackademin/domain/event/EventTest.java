@@ -1,46 +1,64 @@
 package se.nackademin.domain.event;
 
-import javafx.util.converter.LocalTimeStringConverter;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeFieldType;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import se.nackademin.domain.utilities.ApplicationUtilityFunctions;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-
-import java.time.format.FormatStyle;
-import java.util.ArrayList;
+import javax.persistence.Query;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static junit.framework.TestCase.assertTrue;
 
 public class EventTest {
     private EntityManager manager;
+    private static ApplicationUtilityFunctions app;
 
     @Before
     public void setUp() throws Exception {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("persistenceUnit");
         manager = factory.createEntityManager();
-        manager.getTransaction().begin();
+        app.createCategories(manager);
+        app.createEventsThenPersist(manager);
     }
 
     @Test
-    public void createAnEvent(){
-        List<Event> events = new ArrayList<>();
-        events.add(new Event("Dentist", "dentist appointment","2017-06-01","2017-06-01", "10:00", "10:00"));
-        events.add(new Event("Dentist", "dentist appointment", "2017-06-01","2017-06-01", "10:00", "10:00"));
-        events.add(new Event("Dentist", "dentist appointment", "2017-06-01","2017-06-01", "10:00", "10:00"));
-
-        events.forEach(System.out::println);
+    public void createAnEventWithoutCalendarAndCategory() {
+        Event event = new Event("Dentist", "dentist appointment", "2017-06-01", "2017-06-01", "10:00", "10:00");
+        System.out.println(event);
+        assertTrue(event.getName().equals("Dentist"));
     }
 
-    // test helper functions
+    @Test
+    public void getAllEvents() {
+        List<Event> eventList = app.getAllEvents(manager);
+        assertTrue(!eventList.isEmpty());
+        eventList.forEach(System.out::println);
+    }
+
+    @Test
+    public void getAllEventsMatchingCategory() {
+        String divider = "----------------------------------------";
+        Query categoryPersonal = manager.createQuery("select e from Event e where e.category.name = 'Personal'", Event.class);
+        List<Event> personalEvents = categoryPersonal.getResultList();
+        Query categoryWork = manager.createQuery("select e from Event e where e.category.name = 'Work'", Event.class);
+        List<Event> workEvents = categoryWork.getResultList();
+
+        System.out.println("Get all events with the Personal category\n" + divider);
+        personalEvents.forEach(System.out::println);
+        System.out.println(divider);
+        System.out.println("Get all events with the Work category\n" + divider);
+        workEvents.forEach(System.out::println);
+    }
 
 
+
+    @After
+    public void tearDown() throws Exception {
+        app.clearEventsFromDb(manager);
+        app.clearCategoriesFromDb(manager);
+    }
 }
