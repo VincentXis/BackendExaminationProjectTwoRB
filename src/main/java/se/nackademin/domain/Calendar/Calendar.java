@@ -16,7 +16,7 @@ public class Calendar {
     @OneToMany(cascade = CascadeType.PERSIST)
     private List<Event> eventList;
 
-    // Constructor
+    // Constructors
     public Calendar() {
     }
 
@@ -24,7 +24,7 @@ public class Calendar {
         this.name = name;
     }
 
-    // set
+    // setters
     public void setId(Long id) {
         this.id = id;
     }
@@ -37,7 +37,7 @@ public class Calendar {
         this.eventList = eventList;
     }
 
-    // Get
+    // Getters
     public Long getId() {
         return id;
     }
@@ -48,5 +48,10 @@ public class Calendar {
 
     public List<Event> getEventList() {
         return eventList;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

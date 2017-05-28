@@ -25,10 +25,10 @@ public class Event {
     private LocalTime endTime;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    private Calendar calendar;
+    private Category category;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    private Category category;
+    private Calendar calendar;
 
     // Constructors
     public Event() {
@@ -51,6 +51,17 @@ public class Event {
         this.startTime = LocalTime.parse(startTime, DateTimeFormat.forPattern("HH:mm"));
         this.endTime = LocalTime.parse(endTime, DateTimeFormat.forPattern("HH:mm"));
         this.category = category;
+    }
+
+    public Event(String name, String description, String startDate, String endDate, String startTime, String endTime, Category category, Calendar calendar) {
+        this.name = name;
+        this.description = description;
+        this.startDate = LocalDate.parse(startDate);
+        this.endDate = LocalDate.parse(endDate);
+        this.startTime = LocalTime.parse(startTime, DateTimeFormat.forPattern("HH:mm"));
+        this.endTime = LocalTime.parse(endTime, DateTimeFormat.forPattern("HH:mm"));
+        this.category = category;
+        this.calendar = calendar;
     }
 
 

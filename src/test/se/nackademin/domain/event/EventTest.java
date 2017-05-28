@@ -13,16 +13,17 @@ import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
 
+@SuppressWarnings("Duplicates")
 public class EventTest {
     private EntityManager manager;
-    private static ApplicationUtilityFunctions app;
 
     @Before
     public void setUp() throws Exception {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("persistenceUnit");
         manager = factory.createEntityManager();
-        app.createCategories(manager);
-        app.createEventsThenPersist(manager);
+        ApplicationUtilityFunctions.createCalendar(manager);
+        ApplicationUtilityFunctions.createCategories(manager);
+        ApplicationUtilityFunctions.createEventsThenPersist(manager);
     }
 
     @Test
@@ -34,7 +35,7 @@ public class EventTest {
 
     @Test
     public void getAllEvents() {
-        List<Event> eventList = app.getAllEvents(manager);
+        List<Event> eventList = ApplicationUtilityFunctions.getAllEvents(manager);
         assertTrue(!eventList.isEmpty());
         eventList.forEach(System.out::println);
     }
@@ -58,7 +59,8 @@ public class EventTest {
 
     @After
     public void tearDown() throws Exception {
-        app.clearEventsFromDb(manager);
-        app.clearCategoriesFromDb(manager);
+        ApplicationUtilityFunctions.clearEventsFromDb(manager);
+        ApplicationUtilityFunctions.clearCategoriesFromDb(manager);
+        ApplicationUtilityFunctions.clearCalendarsFromDb(manager);
     }
 }
