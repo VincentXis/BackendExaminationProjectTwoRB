@@ -1,7 +1,5 @@
 package se.nackademin.domain.event;
 
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +9,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
@@ -30,7 +31,7 @@ public class EventTest {
 
     @Test
     public void createAnEventWithoutCalendarAndCategory() {
-        Event event = new Event("Dentist", "dentist appointment", "2017-06-01", "2017-06-01", "10:00", "10:00");
+        Event event = new Event("Dentist", "dentist appointment", "2017-06-01", "2017-06-01");
         System.out.println(event);
         assertTrue(event.getName().equals("Dentist"));
     }
@@ -59,9 +60,32 @@ public class EventTest {
 
     @Test
     public void selectEventByDate() {
-        Query query = manager.createQuery("SELECT a from Event a where a.startDate = :date", Event.class).setParameter("date", LocalDate.parse("2017-05-31"));
-        List<Event> eventList = query.getResultList();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = sdf.parse("2017-05-31");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Query singleDateQuery = manager.createQuery("SELECT a from Event a where a.startDate = :date", Event.class).setParameter("date", date);
+        List<Event> eventList = singleDateQuery.getResultList();
         System.out.println(eventList);
+    }
+
+    @Test
+    public void selectEventBetweenDates() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        Date date2 = null;
+        try {
+            date = sdf.parse("2017-05-31");
+            date2 = sdf.parse("2017-06-01");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Query betweenDatesQuery = manager.createQuery("SELECT a from Event a where a.startDate between :date1 and :date2 order by a.startDate", Event.class).setParameter("date1", date).setParameter("date2", date2);
+        List<Event> eventList = betweenDatesQuery.getResultList();
+        eventList.forEach(System.out::println);
     }
 
     @After

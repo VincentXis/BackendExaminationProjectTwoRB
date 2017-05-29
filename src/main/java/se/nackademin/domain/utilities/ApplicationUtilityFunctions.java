@@ -73,23 +73,19 @@ public class ApplicationUtilityFunctions {
             manager.getTransaction().begin();
             if (manager.createQuery("select e from Event e", Event.class).getResultList().size() == 0) {
                 manager.persist(
-                        new Event("Dentist", "dentist appointment", "2017-06-01",
-                                "2017-06-01", "10:00", "10:00",
+                        new Event("Dentist", "dentist appointment", "2017-06-01", "2017-06-01",
                                 getCategoryMatchingName("Personal", manager),
                                 getCalendarMatchingName("Personal Calendar", manager)));
                 manager.persist(
-                        new Event("Lunch", "lunch meeting with friend", "2017-06-02",
-                                "2017-06-02", "12:00", "13:00",
+                        new Event("Lunch", "lunch meeting with friend", "2017-06-02", "2017-06-02",
                                 getCategoryMatchingName("Personal", manager),
                                 getCalendarMatchingName("Personal Calendar", manager)));
                 manager.persist(
-                        new Event("Office party", "office party at clarion hotel", "2017-07-12",
-                                "2017-07-13", "18:00", "03:00",
+                        new Event("Office party", "office party at clarion hotel", "2017-07-12", "2017-07-13",
                                 getCategoryMatchingName("Work", manager),
                                 getCalendarMatchingName("Personal Calendar", manager)));
                 manager.persist(
-                        new Event("Java Backend", "backend course with Bjorn", "2017-05-31",
-                                "2017-05-31", "09:00", "16:00",
+                        new Event("Java Backend", "backend course with Bjorn", "2017-05-31", "2017-05-31",
                                 getCategoryMatchingName("School", manager),
                                 getCalendarMatchingName("Personal Calendar", manager)));
             }

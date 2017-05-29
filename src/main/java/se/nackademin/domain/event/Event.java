@@ -1,13 +1,12 @@
 package se.nackademin.domain.event;
 
-import org.joda.time.LocalDate;
-import org.joda.time.LocalTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import se.nackademin.domain.Calendar.Calendar;
 import se.nackademin.domain.category.Category;
 
 import javax.persistence.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity
 @Table
@@ -18,11 +17,10 @@ public class Event {
     private String name;
     private String description;
 
-    private LocalDate startDate;
-    private LocalDate endDate;
-
-    private LocalTime startTime;
-    private LocalTime endTime;
+    @Temporal(TemporalType.DATE)
+    private Date startDate;
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Category category;
@@ -33,37 +31,21 @@ public class Event {
     // Constructors
     public Event() {
     }
-
-    public Event(String name, String description, String startDate, String endDate, String startTime, String endTime) {
+    public Event(String name, String description, String startDate, String endDate) {
         this.name = name;
         this.description = description;
-        this.startDate = LocalDate.parse(startDate);
-        this.endDate = LocalDate.parse(endDate);
-        this.startTime = LocalTime.parse(startTime, DateTimeFormat.forPattern("HH:mm"));
-        this.endTime = LocalTime.parse(endTime, DateTimeFormat.forPattern("HH:mm"));
+        this.startDate = parseDateFromString(startDate);
+        this.endDate = parseDateFromString(endDate);
     }
 
-    public Event(String name, String description, String startDate, String endDate, String startTime, String endTime, Category category) {
+    public Event(String name, String description, String startDate, String endDate, Category category, Calendar calendar) {
         this.name = name;
         this.description = description;
-        this.startDate = LocalDate.parse(startDate);
-        this.endDate = LocalDate.parse(endDate);
-        this.startTime = LocalTime.parse(startTime, DateTimeFormat.forPattern("HH:mm"));
-        this.endTime = LocalTime.parse(endTime, DateTimeFormat.forPattern("HH:mm"));
-        this.category = category;
-    }
-
-    public Event(String name, String description, String startDate, String endDate, String startTime, String endTime, Category category, Calendar calendar) {
-        this.name = name;
-        this.description = description;
-        this.startDate = LocalDate.parse(startDate);
-        this.endDate = LocalDate.parse(endDate);
-        this.startTime = LocalTime.parse(startTime, DateTimeFormat.forPattern("HH:mm"));
-        this.endTime = LocalTime.parse(endTime, DateTimeFormat.forPattern("HH:mm"));
+        this.startDate = parseDateFromString(startDate);
+        this.endDate = parseDateFromString(endDate);
         this.category = category;
         this.calendar = calendar;
     }
-
 
     // Setters
     public void setId(Long id) {
@@ -78,20 +60,12 @@ public class Event {
         this.description = description;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
-    }
-
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
     }
 
     public void setCalendar(Calendar calendar) {
@@ -115,20 +89,12 @@ public class Event {
         return description;
     }
 
-    public LocalDate getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public LocalDate getEndDate() {
+    public Date getEndDate() {
         return endDate;
-    }
-
-    public LocalTime getStartTime() {
-        return startTime;
-    }
-
-    public LocalTime getEndTime() {
-        return endTime;
     }
 
     public Calendar getCalendar() {
@@ -139,11 +105,21 @@ public class Event {
         return category;
     }
 
+    private Date parseDateFromString(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            return sdf.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Date();
+    }
+
     @Override
     public String toString() {
-        DateTimeFormatter dtf = DateTimeFormat.shortTime();
-        return String.format("Id: %d\nName: %s\nDescription: %s\nCategory: %s\nStart date: %s\nEnd date: %s\nStart time: %s\nEnd time: %s\nCalendar: %s\n",
-                id, name, description, category, startDate, endDate, dtf.print(startTime), dtf.print(endTime), calendar
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return String.format("Id: %d\nName: %s\nDescription: %s\nCategory: %s\nStart date: %s\nEnd date: %s\nCalendar: %s\n",
+                id, name, description, category, sdf.format(startDate), sdf.format(startDate), calendar
         );
     }
 }
