@@ -29,13 +29,6 @@ public class Event {
     public Event() {
     }
 
-    public Event(String name, String description, String startDate, String endDate) {
-        this.name = name;
-        this.description = description;
-        this.startDate = parseDateFromString(startDate);
-        this.endDate = parseDateFromString(endDate);
-    }
-
     public Event(String name, String description, String startDate, String endDate, Category category) {
         this.name = name;
         this.description = description;
