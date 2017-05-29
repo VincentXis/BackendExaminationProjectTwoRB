@@ -13,7 +13,7 @@ public class Category {
     private Long id;
     private String name;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.PERSIST)
     private List<Event> eventList;
 
     // Constructors

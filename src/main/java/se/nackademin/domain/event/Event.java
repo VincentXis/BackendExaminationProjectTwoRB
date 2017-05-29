@@ -1,6 +1,5 @@
 package se.nackademin.domain.event;
 
-import se.nackademin.domain.Calendar.Calendar;
 import se.nackademin.domain.category.Category;
 
 import javax.persistence.*;
@@ -22,15 +21,14 @@ public class Event {
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private Category category;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private Calendar calendar;
 
     // Constructors
     public Event() {
     }
+
     public Event(String name, String description, String startDate, String endDate) {
         this.name = name;
         this.description = description;
@@ -38,13 +36,12 @@ public class Event {
         this.endDate = parseDateFromString(endDate);
     }
 
-    public Event(String name, String description, String startDate, String endDate, Category category, Calendar calendar) {
+    public Event(String name, String description, String startDate, String endDate, Category category) {
         this.name = name;
         this.description = description;
         this.startDate = parseDateFromString(startDate);
         this.endDate = parseDateFromString(endDate);
         this.category = category;
-        this.calendar = calendar;
     }
 
     // Setters
@@ -66,10 +63,6 @@ public class Event {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
-    }
-
-    public void setCalendar(Calendar calendar) {
-        this.calendar = calendar;
     }
 
     public void setCategory(Category category) {
@@ -97,10 +90,6 @@ public class Event {
         return endDate;
     }
 
-    public Calendar getCalendar() {
-        return calendar;
-    }
-
     public Category getCategory() {
         return category;
     }
@@ -118,8 +107,7 @@ public class Event {
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return String.format("Id: %d\nName: %s\nDescription: %s\nCategory: %s\nStart date: %s\nEnd date: %s\nCalendar: %s\n",
-                id, name, description, category, sdf.format(startDate), sdf.format(startDate), calendar
-        );
+        return String.format("Id: %d\nName: %s\nDescription: %s\nCategory: %s\nStart date: %s\nEnd date: %s\n",
+                id, name, description, category, sdf.format(startDate), sdf.format(startDate));
     }
 }
