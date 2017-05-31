@@ -90,12 +90,12 @@ public class Calendar {
     }
 
     public List<Event> getAllEvents() {
-        return manager.createQuery("select e from Event e order by e.id", Event.class).getResultList();
+        return manager.createQuery("select e from Event e order by e.startDate", Event.class).getResultList();
     }
 
     public List<Event> getEventsByStartDate(Date date) {
         Query eventByStartDateQuery =
-                manager.createQuery("SELECT a from Event a where a.startDate = :date order by a.id", Event.class)
+                manager.createQuery("SELECT a from Event a where a.startDate = :date order by a.startDate", Event.class)
                         .setParameter("date", date);
         return eventByStartDateQuery.getResultList();
     }
@@ -110,7 +110,7 @@ public class Calendar {
 
     public List<Event> getEventsByCategory(String category) {
         Query eventByStartDateAndCategoryQuery = manager
-                .createQuery("SELECT a from Event a where a.category.name = :category order by a.id", Event.class)
+                .createQuery("SELECT a from Event a where a.category.name = :category order by a.startDate", Event.class)
                 .setParameter("category", category);
         return eventByStartDateAndCategoryQuery.getResultList();
     }

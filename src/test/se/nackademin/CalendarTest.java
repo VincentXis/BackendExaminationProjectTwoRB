@@ -36,6 +36,7 @@ public class CalendarTest {
     public void getAllEvents() {
         List<Event> eventList = calendar.getAllEvents();
         assertTrue(eventList.size() > 0);
+        eventList.forEach(System.out::print);
     }
 
     @Test
@@ -72,9 +73,7 @@ public class CalendarTest {
         List<Category> categoryList = calendar.getAllCategories();
         assertTrue(categoryList.size() == 3);
         for (Category category : categoryList) {
-            for (Event event : category.getEventList()) {
-                System.out.println(event);
-            }
+            System.out.println(category.getName());
         }
     }
 

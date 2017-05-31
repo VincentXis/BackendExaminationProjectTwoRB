@@ -100,7 +100,7 @@ public class Event {
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return String.format("Id: %d\nName: %s\nDescription: %s\nCategory: %s\nStart date: %s\nEnd date: %s\n",
+        return String.format("Id: %d\nName: %s\nDescription: %s\nCategory: %s\nStart date: %s\nEnd date: %s\n\n",
                 id, name, description, category, sdf.format(startDate), sdf.format(startDate));
     }
 }
