@@ -1,10 +1,10 @@
 ----------------------------------------------------------------
-Wed May 31 11:43:56 CEST 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-015c-5de3-ea54-00000563da30 
-on database directory /home/vincentxis/dev/java-projects/java-backend-projects/BackendExaminationProjectTwoRBjpa/simpleDb  with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
-Loaded from file:/home/vincentxis/.m2/repository/org/apache/derby/derby/10.8.2.2/derby-10.8.2.2.jar
+Wed May 31 20:19:25 CEST 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-015c-5fbb-d850-000004fb8af0 
+on database directory /Users/christopherolsson/Desktop/wawa/BackendExaminationProjectTwoRBjpa/simpleDb  with class loader sun.misc.Launcher$AppClassLoader@28d93b30 
+Loaded from file:/Users/christopherolsson/.m2/repository/org/apache/derby/derby/10.8.2.2/derby-10.8.2.2.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_131-b11
-user.dir=/home/vincentxis/dev/java-projects/java-backend-projects/BackendExaminationProjectTwoRBjpa
+java.runtime.version=1.8.0_121-b13
+user.dir=/Users/christopherolsson/Desktop/wawa/BackendExaminationProjectTwoRBjpa
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
